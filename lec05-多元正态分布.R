@@ -32,7 +32,6 @@ f_func <- function(x1, x2, mu=mu, s11=s11, s22=s22, rho=rho) {
 }
 
 # f1(2,1)
-# f2(2,1, mu=mu, s11=s11, s22=s22, rho=rho)
 
 f <- outer(x1, x2, function(x, y)f_func(x, y, mu=mu, s11=s11, s22=s22, rho=rho))
 # f <- f_func(x1, x2)
