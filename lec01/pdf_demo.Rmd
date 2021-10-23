@@ -1,0 +1,121 @@
+---
+title: "在R Markdown文档中使用中文"
+author: "Hongwei Shi"
+date: "2021-09-08"
+documentclass: ctexart
+geometry: "left=2.5cm, right=2cm, top=3cm, bottom=2.5cm"
+keywords:
+output:
+  rticles::ctex:
+    fig_caption: yes
+    number_sections: yes
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+rm(list = ls())
+knitr::opts_chunk$set(echo = TRUE)
+options(warn = -1) # 关闭警告
+# require(rticles)
+library(knitr)
+library(kableExtra)
+library(papeR)
+```
+
+# 参考资料
+## 参考书目
+- [R for Data Science](https://r4ds.had.co.nz/)
+- [ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org/)
+- [Advanced R](https://adv-r.hadley.nz/)
+- [R Packages](https://r-pkgs.org/)
+- [现代统计图形](https://bookdown.org/xiangyun/msg/)
+- [数据科学中的 R 语言](https://bookdown.org/wangminjie/R4DS/)
+- [R语言教程](https://www.math.pku.edu.cn/teachers/lidf/docs/Rbook/html/_Rbook/index.html)
+
+## R blogger主页
+- [Hadley Wickham](http://hadley.nz/)
+- [谢益辉](https://yihui.org/)
+- [黄湘云](https://xiangyun.rbind.io/)
+
+# 基本介绍
+## R语言的历史
+[The History of R (updated for 2020)](https://blog.revolutionanalytics.com/2020/07/the-history-of-r-updated-for-2020.html)
+
+- 1992: R development begins as a research project in Auckland, NZ by Robert Gentleman and Ross Ihaka 
+- 1993: First binary versions of R published at Statlib
+- 1995: R first distributed as open-source software, under GPL2 license
+- 1997: R core group formed
+- 1997: CRAN founded (by Kurt Hornik and Fritz Leisch)
+- 1999: The R website, r-project.org, founded
+- 1999: First in-person meeting of R Core team, at inaugural Directions in Statistical Computing conference, Vienna
+- 2000: R 1.0.0 released (February 29) 
+- 2000: John Chambers, recipient of the 1998 ACM Software Systems Award for the S language, joins R Core
+- 2001: R News founded (later to become the R Journal)
+- 2003: R Foundation founded
+- 2004: First UseR! conference (in Vienna)
+- 2004: R 2.0.0 released
+- 2009: First edition of the R Journal
+- 2013: R 3.0.0 released
+- 2015: R Consortium founded, with R Foundation participation
+- 2016: New R logo adopted
+- 2017: CRAN exceeds 10,000 published packages
+- 2020: R 4.0.0 released
+
+## R语言，你值得拥有
+- R 是一个统计编程语言 (statistical programming)
+- R 拥有顶尖水准的制图功能
+- R 是**免费的**
+- R 应用广泛，拥有丰富的库包，活跃的社区
+- 统计学研究者的**重要工具**！
+
+2019 年 8 月，国际统计学年会将考普斯总统奖（The Committee of Presidents of Statistical Societies Awards，简称 COPSS 奖，被誉为统计学的诺贝尔奖）奖颁给 tidyverse的作者Hadley Wickham后，充分说明R语言得到了学术界的肯定和认可，未来一片光明！
+
+[Hadley Wickham's Homepage](http://hadley.nz/)，改变了R语言的人！
+
+![](lec01_files/figure-html/hadley-wickham.jpeg)
+
+## 为什么要可视化？
+- 看图片，往往能比表格传达出更多的信息，一图胜千言
+- 可视化，“一半是科学、一半是艺术”。要做图，更要做漂亮的图
+- 但可视化只是一种手段，根据数据实际情况作展示才是重要的，并不是要追求酷炫，适合自己的才是最好的
+
+## 主要介绍内容
+- R base：graphic
+- Advanced：[ggplot2](https://ggplot2-book.org/)
+- 交互图：plotly
+
+# 基础做图
+## 直方图
+直方图（Histogram）是展示连续数据分布最常用的工具，它本质上是对密度函数的一种估计。
+```{r}
+library(formatR)
+usage(hist.default)
+```
+- x 为欲估计分布的数值向量
+- breaks 决定了计算分段区间的方法，它可以是一个向量（依次给出区间端点），或者一个数字（决定拆分为多少段），或者一个字符串（给出计算划分区间的算法名称），或者一个函数（给出划分区间个数的方法），区间的划分直接决定了直方图的形状，因此这个参数是非常关键的
+- freq 和 probability 参数均取逻辑值（二者互斥），前者决定是否以频数作图，后者决定是否以概率密度作图（这种情况下矩形面积为 1）
+- labels 为逻辑值，决定是否将频数的数值添加到矩形条的上方
+
+我们以黄石国家公园喷泉数据 geyser 为例, 展示了喷泉喷发间隔时间的分布情况。
+```{r}
+par(mfrow = c(3, 2))
+data(geyser, package = "MASS")
+hist(geyser$waiting, main = "(1) freq = TRUE", xlab = "waiting")
+hist(geyser$waiting, freq = FALSE, xlab = "waiting", main = "(2) freq = FALSE")
+hist(geyser$waiting, breaks = 5, density = 10, labels = TRUE, xlab = "waiting", main = "(3) breaks = 5")
+hist(geyser$waiting, breaks = 40, col = "red", xlab = "waiting", main = "(4) breaks = 40")
+hist(geyser$waiting, 
+     breaks = quantile(geyser$waiting, probs = seq(0, 1, 0.1)), 
+     border = "blue", xlab = "waiting", main = "(5) breaks by quantile")
+```
+
+直方图与密度曲线的结合：借助函数 `density()` 可以计算出数据的核密度估计
+```{r}
+hist(geyser$waiting, probability = TRUE, main = "", xlab = "waiting")
+d <- density(geyser$waiting)
+lines(d) # 添加密度曲线
+polygon(c(min(d$x), d$x, max(d$x)), c(0, d$y, 0), col = "lightgray", border = NA) # 填充颜色
+yend <- c(); brk <- seq(40, 110, 5)
+for (i in brk) {yend <- c(yend, d$y[which.min(abs(d$x - i))])}
+segments(brk, 0, brk, yend, lty = 3) # 在点对之间画线段
+```
