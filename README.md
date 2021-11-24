@@ -5,7 +5,7 @@ The materials for multivariate statistical analysis when I was the TA of R Langu
 - Multivariate Statistical Analysis (FALL, 2021)
 - Instructor: Xu Guo
 
-## Ref
+## Refs
 lec9_logistic回归模型:
 - [梯度下降和牛顿迭代](https://mp.weixin.qq.com/s?__biz=MzI3NzE3NDAxMg==&mid=2247486414&idx=1&sn=7719838453d18d887357a30a7cc8333c&chksm=eb6b085ddc1c814bff0274a7aae4b26af7578736157f47bc7b3f6383bf1804471e893ecff3af&mpshare=1&scene=23&srcid=1110nnHi5RJditqJ91MEM3nc&sharer_sharetime=1636516416526&sharer_shareid=b8f1518638b19f3e84add00d7ea4e422%23rd)
 - [一文让你搞懂Logistic回归模型](https://mp.weixin.qq.com/s?__biz=MzI3NzE3NDAxMg==&mid=2247485328&idx=1&sn=4cbb9c77b5aa3b1b4c0073d8653d4db5&chksm=eb6b0403dc1c8d15de228a3282e37b008f82e5c9229275d13432cb9990f503d4fad2df9ebcf5&mpshare=1&scene=23&srcid=11109HOgq63KLwvrLm92nSn4&sharer_sharetime=1636516390937&sharer_shareid=b8f1518638b19f3e84add00d7ea4e422%23rd)
