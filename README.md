@@ -3,7 +3,7 @@ The materials for multivariate statistical analysis when I was the TA of R Langu
 
 - School of Statistics, Beijing Normal University
 - Multivariate Statistical Analysis (FALL, 2021)
-- Instructor: Xu Guo
+- Instructor: Associate Prof. Xu Guo
 
 ## Refs
 lec04-svd:
